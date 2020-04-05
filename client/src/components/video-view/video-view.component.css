@@ -1,0 +1,25 @@
+.video-view {
+  position: relative;
+
+  height: 0;
+  overflow: hidden;
+  margin-top: 10px;
+  padding-bottom: 56.25%;
+}
+
+.video-view__spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+}
+
+.video-view__iframe {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  height: 100%;
+  width: 100%;
+}

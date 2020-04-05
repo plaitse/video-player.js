@@ -1,0 +1,66 @@
+.components-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .components-wrapper {
+    align-items: center;
+    flex-wrap: nowrap;
+    height: 100%;
+  }
+}
+
+/* History */
+
+.history {
+  order: 3;
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .history {
+    order: 1;
+    width: 20%;
+  }
+}
+
+/* Video player - Input + View */
+
+.video-player {
+  order: 1;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .video-player {
+    order: 2;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 0px;
+  }
+}
+
+/* Bookmarks */
+
+.bookmarks {
+  order: 2;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .bookmarks {
+    order: 3;
+    width: 20%;
+    margin-bottom: 0px;
+  }
+}
+
+.bookmarks-display {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}

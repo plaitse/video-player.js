@@ -1,0 +1,29 @@
+<mat-card class="search-bar">
+  <form
+    class="search-bar__form"
+    (click)="$event.preventDefault()"
+    (keydown.enter)="$event.preventDefault()"
+    (keydown.shift.enter)="$event.preventDefault()"
+  >
+    <mat-form-field class="search-bar__field">
+      <mat-label>Search a video</mat-label>
+      <input
+        #url
+        (keyup)="onKey($event)"
+        matInput
+        placeholder="Enter the URL of your video"
+      />
+      <button
+        *ngIf="bookmarkAvailable"
+        mat-icon-button
+        matSuffix
+        (click)="saveBookmark()"
+      >
+        <mat-icon class="bookmark-save__icon">star</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <p class="input-error" *ngIf="inputError">{{ inputError }}</p>
+    <p class="input-info">Press enter to load your video</p>
+  </form>
+</mat-card>

@@ -1,0 +1,32 @@
+.search-bar {
+  margin-bottom: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .search-bar {
+    margin-bottom: 0px;
+  }
+}
+
+.search-bar__form {
+  width: 100%;
+}
+
+.search-bar__field {
+  width: 100%;
+}
+
+.input-error {
+  color: red;
+  font-style: italic;
+}
+
+.input-info {
+  font-size: 12px;
+  font-style: italic;
+}
+
+.bookmark-save__icon {
+  color: #ff4081;
+  font-size: 20px !important;
+}

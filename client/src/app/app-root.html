@@ -1,0 +1,40 @@
+<div class="components-wrapper">
+  <history class="history"></history>
+
+  <div class="video-player">
+    <search-bar></search-bar>
+    <video-view *ngIf="url | async"></video-view>
+  </div>
+
+  <bookmarks *ngIf="bookmarksDisplayed" class="bookmarks"></bookmarks>
+</div>
+
+<button
+  *ngIf="url | async"
+  mat-fab
+  class="bookmarks-display"
+  (click)="toggleBookmarks()"
+>
+  <svg style="width: 24px; height: 24px;" viewBox="0 0 24 24">
+    <path
+      fill="currentColor"
+      d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"
+    />
+  </svg>
+</button>
+
+<p>
+  <a (click)="loadHistories()">Load History</a>
+</p>
+
+<ng-template [ngIf]="histories.length">
+  <h2>You have {{ histories.length }} histories!</h2>
+
+  <ul>
+    <li *ngFor="let history of histories">
+      {{ history.url }}
+    </li>
+  </ul>
+</ng-template>
+
+<router-outlet></router-outlet>

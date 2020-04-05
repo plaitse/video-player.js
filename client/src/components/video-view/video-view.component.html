@@ -1,0 +1,15 @@
+<mat-card class="video-view">
+  <div *ngIf="!videoLoaded" class="video-view__spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <iframe
+    *ngIf="videoLoaded"
+    class="video-view__iframe"
+    width="560"
+    height="315"
+    [src]="formatSafeUrl(url | async)"
+    frameborder="0"
+    allowfullscreen
+  ></iframe>
+</mat-card>
