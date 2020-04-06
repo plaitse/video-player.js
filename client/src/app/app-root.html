@@ -22,19 +22,3 @@
     />
   </svg>
 </button>
-
-<p>
-  <a (click)="loadHistories()">Load History</a>
-</p>
-
-<ng-template [ngIf]="histories.length">
-  <h2>You have {{ histories.length }} histories!</h2>
-
-  <ul>
-    <li *ngFor="let history of histories">
-      {{ history.url }}
-    </li>
-  </ul>
-</ng-template>
-
-<router-outlet></router-outlet>

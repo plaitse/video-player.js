@@ -4,7 +4,7 @@ import { State } from '../../services/state.service';
 
 interface History {
   _id: string;
-  url: string;
+  videoUrl: string;
   date: Date;
 }
 
@@ -24,7 +24,7 @@ export class HistoryComponent implements OnInit {
   public async ngOnInit() {
     try {
       this.histories = await this.apiClient.get<History[]>({
-        url: 'http://localhost:8000/history',
+        route: 'http://localhost:8000/history',
       });
       console.warn('length :', this.histories.length);
       console.warn('histories :', this.histories);

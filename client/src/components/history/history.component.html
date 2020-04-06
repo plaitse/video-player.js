@@ -9,9 +9,9 @@
     <mat-list *ngFor="let history of histories">
       <mat-list-item
         class="history__item"
-        (click)="selectHistoryUrl(history.url)"
+        (click)="selectHistoryUrl(history.videoUrl)"
       >
-        {{ history.url }}</mat-list-item
+        {{ history.videoUrl }}</mat-list-item
       >
     </mat-list>
   </div>

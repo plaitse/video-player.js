@@ -36,7 +36,7 @@ router.get("/:historyId", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const history = new History({
-      url: req.body.url,
+      videoUrl: req.body.videoUrl,
     });
     const savedHistory = await history.save();
     res.status(200).json(savedHistory);

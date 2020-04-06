@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
+import { ApiClient } from '../../services/api-client.service';
 import { State } from '../../services/state.service';
+
+interface History {
+  videoUrl: string;
+}
 
 const youtubeParser = 'watch?v=';
 
@@ -13,14 +18,14 @@ export class SearchBarComponent {
   public inputError: string = '';
   public url: string = '';
 
-  constructor(private state: State) {}
+  constructor(private apiClient: ApiClient, private state: State) {}
 
   /**
    * Key handler
    * Only submit input if enter key is pressed
    * Save URL if correct in global state to be accessible to other components
    */
-  public onKey(event: any) {
+  public async onKey(event: any) {
     this.resetInput();
 
     if (event.key !== 'Enter') {
@@ -28,7 +33,6 @@ export class SearchBarComponent {
     }
 
     const url = event.target.value.split(youtubeParser);
-    console.warn('Search-bar URL : ', url);
 
     if (!url[1]) {
       this.inputError =
@@ -36,9 +40,7 @@ export class SearchBarComponent {
       return;
     }
 
-    this.bookmarkAvailable = true;
-    this.url = url[1];
-    this.state.url = this.url;
+    await this.storeUrl(url[1]);
   }
 
   /**
@@ -55,4 +57,48 @@ export class SearchBarComponent {
    * Save URL into bookmarks
    */
   public saveBookmark() {}
+
+  public async storeUrl(url: string) {
+    // Display button to toggle bookmarks panel
+    this.bookmarkAvailable = true;
+    // Store URL localy
+    this.url = url;
+    // Store URL in state to be accessible for other components
+    this.state.url = this.url;
+
+    const response = await this.storeUrlInDatabase();
+    console.warn('response from database : ', response, response.videoUrl);
+    this.storeUrlInLocalStorage(response);
+  }
+
+  /**
+   * Store the URL in the database with a post request
+   */
+  public async storeUrlInDatabase() {
+    if (!!this.state.url) {
+      console.warn('before post request');
+      // Store URL in database
+      const response = await this.apiClient.post<History>({
+        route: 'http://localhost:8000/history',
+        videoUrl: this.url,
+      });
+      console.warn('response : ', response);
+      return response;
+    }
+  }
+
+  /**
+   * Store the new history in the localStorage by concatenating the histories
+   */
+  public storeUrlInLocalStorage(response) {
+    if (response && Object.values(response)) {
+      const histories = window.localStorage.getItem('histories');
+      if (!histories) {
+        window.localStorage.setItem('histories', response.videoUrl);
+      } else {
+        const newHistories = histories + '|' + response.videoUrl;
+        window.localStorage.setItem('histories', newHistories);
+      }
+    }
+  }
 }

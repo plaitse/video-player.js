@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 
 const HistorySchema = mongoose.Schema({
-  url: {
+  videoUrl: {
     type: String,
-    required: true
+    required: true,
   },
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model("History", HistorySchema);
