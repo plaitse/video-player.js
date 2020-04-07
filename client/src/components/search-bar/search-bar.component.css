@@ -1,3 +1,5 @@
+/* Search bar */
+
 .search-bar {
   margin-bottom: 10px;
 }
@@ -26,7 +28,13 @@
   font-style: italic;
 }
 
+/* Bookmarks save button */
+
 .bookmark-save__icon {
   color: #ff4081;
   font-size: 20px !important;
+}
+
+.bookmark-save__icon:hover {
+  font-size: 25px !important;
 }

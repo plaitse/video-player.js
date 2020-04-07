@@ -1,8 +1,10 @@
 <mat-card class="video-view">
+  <!-- UX spinner before video is loaded -->
   <div *ngIf="!videoLoaded" class="video-view__spinner">
     <mat-spinner></mat-spinner>
   </div>
 
+  <!-- Video player -->
   <iframe
     *ngIf="videoLoaded"
     class="video-view__iframe"

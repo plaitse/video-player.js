@@ -1,20 +1,19 @@
 <div class="components-wrapper">
+  <!-- History panel -->
   <history class="history" *ngIf="showHistory | async"></history>
 
+  <!-- Search bar and video view panels -->
   <div class="video-player">
     <search-bar></search-bar>
     <video-view *ngIf="url | async"></video-view>
   </div>
 
-  <bookmarks *ngIf="bookmarksDisplayed" class="bookmarks"></bookmarks>
+  <!-- Bookmarks panel-->
+  <bookmarks *ngIf="showBookmarks | async" class="bookmarks"></bookmarks>
 </div>
 
-<button
-  *ngIf="url | async"
-  mat-fab
-  class="bookmarks-display"
-  (click)="toggleBookmarks()"
->
+<!-- Button to show or hide the bookmarks panel -->
+<button mat-fab class="bookmarks-display" (click)="toggleBookmarks()">
   <svg style="width: 24px; height: 24px;" viewBox="0 0 24 24">
     <path
       fill="currentColor"

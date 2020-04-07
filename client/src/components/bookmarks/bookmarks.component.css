@@ -1,3 +1,14 @@
 .bookmarks__item {
   font-size: 12px;
+  cursor: pointer;
+}
+
+.bookmarks__item:hover {
+  font-weight: bold;
+}
+
+@media screen and (min-width: 768px) {
+  .history__item:hover {
+    transform: scale(1.1);
+  }
 }

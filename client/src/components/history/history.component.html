@@ -1,10 +1,12 @@
 <mat-card>
   <h2>History</h2>
 
+  <!-- Information if no history exists yet -->
   <div *ngIf="!histories.length">
     You haven't searched for any history yet.
   </div>
 
+  <!-- List of all the histories -->
   <div *ngIf="histories.length">
     <mat-list *ngFor="let history of histories">
       <mat-list-item

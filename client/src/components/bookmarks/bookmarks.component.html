@@ -1,9 +1,17 @@
 <mat-card>
   <h2>Bookmarks</h2>
 
-  <mat-list>
-    <mat-list-item class="bookmarks__item"> Pepper </mat-list-item>
-    <mat-list-item class="bookmarks__item"> Salt </mat-list-item>
-    <mat-list-item class="bookmarks__item"> Paprika </mat-list-item>
-  </mat-list>
+  <!-- Information if no bookmark exists yet -->
+  <div *ngIf="!bookmarks.length">
+    You haven't saved any url yet.
+  </div>
+
+  <!-- List of all the bookmarks -->
+  <div *ngIf="bookmarks.length">
+    <mat-list *ngFor="let url of bookmarks">
+      <mat-list-item class="bookmarks__item" (click)="selectBookmarksUrl(url)">
+        {{ url }}</mat-list-item
+      >
+    </mat-list>
+  </div>
 </mat-card>

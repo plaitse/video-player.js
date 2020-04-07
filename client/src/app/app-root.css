@@ -1,3 +1,5 @@
+/* Wrapper around all the components/panels */
+
 .components-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -10,6 +12,28 @@
     flex-wrap: nowrap;
     height: 100%;
   }
+}
+
+/* Bookmarks */
+
+.bookmarks {
+  order: 2;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .bookmarks {
+    order: 3;
+    width: 20%;
+    margin-bottom: 0px;
+  }
+}
+
+.bookmarks-display {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }
 
 /* History */
@@ -41,26 +65,4 @@
     margin-right: 10px;
     margin-bottom: 0px;
   }
-}
-
-/* Bookmarks */
-
-.bookmarks {
-  order: 2;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-@media screen and (min-width: 768px) {
-  .bookmarks {
-    order: 3;
-    width: 20%;
-    margin-bottom: 0px;
-  }
-}
-
-.bookmarks-display {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
 }

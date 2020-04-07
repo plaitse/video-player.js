@@ -8,6 +8,8 @@ export interface History {
 }
 
 export const historyLocalStorage = 'historyCached';
+export const historyLocalStorageError =
+  'Could not save history in localStorage : ';
 export const historyRoute = 'http://localhost:8000/history';
 
 @Component({
@@ -24,11 +26,16 @@ export class HistoryComponent implements OnInit {
    * Fetch all histories from localStorage on component's init
    */
   public async ngOnInit() {
-    console.warn('Passes in ngOnInit History');
-    const historyCached = window.localStorage.getItem(historyLocalStorage);
+    try {
+      const historyCached: string = window.localStorage.getItem(
+        historyLocalStorage
+      );
 
-    if (!!historyCached) {
-      this.histories = (JSON.parse(historyCached) as History[]).reverse();
+      if (!!historyCached) {
+        this.histories = (JSON.parse(historyCached) as History[]).reverse();
+      }
+    } catch (err) {
+      throw new Error(historyLocalStorageError + err);
     }
   }
 
@@ -39,6 +46,7 @@ export class HistoryComponent implements OnInit {
     if (!url) {
       return;
     }
+    // Update state
     this.state.url = url;
   }
 }

@@ -6,7 +6,12 @@ import {
   History,
   historyLocalStorage,
   historyRoute,
+  historyLocalStorageError,
 } from '../components/history/history.component';
+import {
+  bookmarksLocalStorage,
+  bookmarksLocalStorageError,
+} from 'src/components/bookmarks/bookmarks.component';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +19,10 @@ import {
   styleUrls: ['./app-root.css'],
 })
 export class AppRoot implements OnInit {
-  public bookmarksDisplayed: boolean = false;
-  public url: Observable<string> = this.state.url$;
+  // Observer on the following variables
+  public showBookmarks: Observable<boolean> = this.state.showBookmarks$;
   public showHistory: Observable<boolean> = this.state.showHistory$;
+  public url: Observable<string> = this.state.url$;
 
   constructor(private clientApi: ClientApi, private state: State) {}
 
@@ -24,6 +30,7 @@ export class AppRoot implements OnInit {
    * Fetch all histories on component's init and store them in the localStorage
    */
   public async ngOnInit() {
+    this.state.showBookmarks = false;
     await this.fetchAndStoreHistories();
   }
 
@@ -31,16 +38,31 @@ export class AppRoot implements OnInit {
    * Get histories from database and store them in the localStorage
    */
   public async fetchAndStoreHistories() {
+    const histories: History[] = await this.clientApi.get<History[]>({
+      route: historyRoute,
+    });
+    console.warn('Histories fetched : ', histories);
+
+    if (!histories.length) {
+      // Reset bookmarks if no history is stored in the database
+      this.resetBookmarks();
+    }
+
+    // Store the histories in the localStorage
+    this.storeUrlInLocalStorage(histories);
+
+    // Display the history panel
+    this.state.showHistory = true;
+  }
+
+  /**
+   * Reset bookmarks URL from the localStorage to empty the bookmarks panel
+   */
+  public resetBookmarks() {
     try {
-      const histories: History[] = await this.clientApi.get<History[]>({
-        route: historyRoute,
-      });
-      console.warn('length :', histories.length);
-      console.warn('histories :', histories);
-      this.storeUrlInLocalStorage(histories);
-      this.state.showHistory = true;
+      window.localStorage.setItem(bookmarksLocalStorage, '[]');
     } catch (err) {
-      console.error(err);
+      throw new Error(bookmarksLocalStorageError + err);
     }
   }
 
@@ -48,13 +70,20 @@ export class AppRoot implements OnInit {
    * Store the new history in the localStorage
    */
   public storeUrlInLocalStorage(histories) {
-    window.localStorage.setItem(historyLocalStorage, JSON.stringify(histories));
+    try {
+      window.localStorage.setItem(
+        historyLocalStorage,
+        JSON.stringify(histories)
+      );
+    } catch (err) {
+      throw new Error(historyLocalStorageError + err);
+    }
   }
 
   /**
    * Show or hide bookmarks panel
    */
   public toggleBookmarks() {
-    this.bookmarksDisplayed = !this.bookmarksDisplayed;
+    this.state.showBookmarks = !this.state.showBookmarks;
   }
 }

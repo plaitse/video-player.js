@@ -6,13 +6,18 @@
     (keydown.shift.enter)="$event.preventDefault()"
   >
     <mat-form-field class="search-bar__field">
+      <!-- Label -->
       <mat-label>Search a video</mat-label>
+
+      <!-- Input -->
       <input
         #url
         (keyup)="onKey($event)"
         matInput
         placeholder="Enter the URL of your video"
       />
+
+      <!-- Save bookmark button -->
       <button
         *ngIf="bookmarkAvailable"
         mat-icon-button
@@ -23,6 +28,7 @@
       </button>
     </mat-form-field>
 
+    <!-- Information for UX -->
     <p class="input-error" *ngIf="inputError">{{ inputError }}</p>
     <p class="input-info">Press enter to load your video</p>
   </form>

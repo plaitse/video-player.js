@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { AxiosInstance } from 'axios';
 import { Injectable } from '@angular/core';
 
@@ -30,10 +30,12 @@ export class ClientApi {
 
   public async get<T>(options: GetOptions): Promise<T> {
     try {
-      const axiosResponse = await this.axiosClient.request<T>({
-        method: 'get',
-        url: options.route,
-      });
+      const axiosResponse: AxiosResponse<T> = await this.axiosClient.request<T>(
+        {
+          method: 'get',
+          url: options.route,
+        }
+      );
 
       return axiosResponse.data;
     } catch (err) {
@@ -43,13 +45,15 @@ export class ClientApi {
 
   public async post<T>(options: PostOptions): Promise<T> {
     try {
-      const axiosResponse = await this.axiosClient.request<T>({
-        method: 'post',
-        url: options.route,
-        data: {
-          videoUrl: options.videoUrl,
-        },
-      });
+      const axiosResponse: AxiosResponse<T> = await this.axiosClient.request<T>(
+        {
+          method: 'post',
+          url: options.route,
+          data: {
+            videoUrl: options.videoUrl,
+          },
+        }
+      );
 
       return axiosResponse.data;
     } catch (err) {
