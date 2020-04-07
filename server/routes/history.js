@@ -2,16 +2,6 @@ const express = require("express");
 const router = express.Router();
 const History = require("../models/History");
 
-/**
- * 1. Improve status code
- * 2. Improve error catch
- * 3. Improve error messages for user
- * 4. Install TypeScript above
- *
- * ==> See old Node.js project on GitHub
- * ==> See Node.js doc
- */
-
 // GET all histories
 router.get("/", async (req, res) => {
   try {

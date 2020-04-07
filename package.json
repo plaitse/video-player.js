@@ -7,7 +7,7 @@
   "scripts": {
     "build-client": "cd client && npm i",
     "build-server": "cd server && npm i",
-    "build": "concurrently -n 'server,client' -c 'blue,green' \"npm run build-server\" \"npm run build-client\"",
+    "build": "npm i && concurrently -n 'server,client' -c 'blue,green' \"npm run build-server\" \"npm run build-client\"",
     "start-client": "cd client && npm run start",
     "start-server": "cd server && npm run start",
     "start": "concurrently -n 'server,client' -c 'blue,green' \"npm run start-server\" \"npm run start-client\""
