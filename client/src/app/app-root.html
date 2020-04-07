@@ -1,5 +1,5 @@
 <div class="components-wrapper">
-  <history class="history"></history>
+  <history class="history" *ngIf="showHistory | async"></history>
 
   <div class="video-player">
     <search-bar></search-bar>

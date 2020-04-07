@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-import { ApiClient } from '../../services/api-client.service';
+import { ClientApi } from '../../services/client-api.service';
 import { State } from '../../services/state.service';
-
-interface History {
-  videoUrl: string;
-}
+import { History, historyLocalStorage } from '../history/history.component';
 
 const youtubeParser = 'watch?v=';
 
@@ -18,7 +15,7 @@ export class SearchBarComponent {
   public inputError: string = '';
   public url: string = '';
 
-  constructor(private apiClient: ApiClient, private state: State) {}
+  constructor(private clientApi: ClientApi, private state: State) {}
 
   /**
    * Key handler
@@ -54,10 +51,13 @@ export class SearchBarComponent {
   }
 
   /**
-   * Save URL into bookmarks
+   * TODO
    */
   public saveBookmark() {}
 
+  /**
+   * Save URL into bookmarks
+   */
   public async storeUrl(url: string) {
     // Display button to toggle bookmarks panel
     this.bookmarkAvailable = true;
@@ -67,8 +67,11 @@ export class SearchBarComponent {
     this.state.url = this.url;
 
     const response = await this.storeUrlInDatabase();
-    console.warn('response from database : ', response, response.videoUrl);
-    this.storeUrlInLocalStorage(response);
+    if (response && Object.values(response).length) {
+      this.storeUrlInLocalStorage(response);
+      console.warn('response from database : ', response, response.videoUrl);
+      this.updateHistoryPanel();
+    }
   }
 
   /**
@@ -76,29 +79,42 @@ export class SearchBarComponent {
    */
   public async storeUrlInDatabase() {
     if (!!this.state.url) {
-      console.warn('before post request');
-      // Store URL in database
-      const response = await this.apiClient.post<History>({
-        route: 'http://localhost:8000/history',
-        videoUrl: this.url,
-      });
-      console.warn('response : ', response);
-      return response;
+      try {
+        console.warn('before post request');
+        const response = await this.clientApi.post<History>({
+          route: 'http://localhost:8000/history',
+          videoUrl: this.url,
+        });
+        console.warn('response : ', response);
+        return response;
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
 
   /**
-   * Store the new history in the localStorage by concatenating the histories
+   * Store the new history in the localStorage (to be improved)
    */
-  public storeUrlInLocalStorage(response) {
-    if (response && Object.values(response)) {
-      const histories = window.localStorage.getItem('histories');
-      if (!histories) {
-        window.localStorage.setItem('histories', response.videoUrl);
-      } else {
-        const newHistories = histories + '|' + response.videoUrl;
-        window.localStorage.setItem('histories', newHistories);
-      }
-    }
+  public storeUrlInLocalStorage(newHistory: History) {
+    // Get histories from cache
+    const historyCached = window.localStorage.getItem(historyLocalStorage);
+    const histories = JSON.parse(historyCached) as History[];
+    console.warn('histories cached : ', histories);
+
+    // Add new history into cache
+    histories.push(newHistory);
+    window.localStorage.setItem(historyLocalStorage, JSON.stringify(histories));
+  }
+
+  /**
+   * Trick to update history panel with observable (to be improved)
+   */
+  public updateHistoryPanel() {
+    console.warn('Passes in update');
+    this.state.showHistory = false;
+    setTimeout(() => {
+      this.state.showHistory = true;
+    }, 1);
   }
 }

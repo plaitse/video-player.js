@@ -19,7 +19,7 @@ export interface Params {
   // Service created by the root application injector
   providedIn: 'root',
 })
-export class ApiClient {
+export class ClientApi {
   private axiosClient: AxiosInstance;
 
   constructor() {
