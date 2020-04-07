@@ -3,7 +3,7 @@ Video Player
 - Client in Angular v9 / TypeScript v3
 - Server in Node.js v12
 
-# How to use the app:
+# How to use the app
 
 - `npm run build` from the root directory to install the Node modules in both client and server
 - `npm run start` from the root directory to start the app
@@ -11,7 +11,7 @@ Video Player
 
 If any error occurs, please try to run the above commands in each directory (client and server) in two seperated terminals.
 
-# How to use the API seperately if needed:
+# How to use the API seperately if needed
 
 - Access the API on the following URL: `http://localhost:8000`
 - POST a new history on route `http://localhost:8000/history`
