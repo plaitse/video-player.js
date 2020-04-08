@@ -1,10 +1,11 @@
 Video Player
 
-- Client in Angular v9 / TypeScript v3
-- Server in Node.js v12
+- Client in Angular v9.1 / TypeScript v3.8
+- Server in Node.js v12.13
 
 # How to use the app
 
+- Prerequisite: run `sudo npm install -g @angular/cli` if you don't have Angular CLI on your machine yet
 - `npm run build` from the root directory to install the Node modules in both client and server
 - `npm run start` from the root directory to start the app
 - Access the app on the following URL: `http://localhost:8001`
